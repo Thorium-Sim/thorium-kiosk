@@ -20,7 +20,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(`http://localhost:4000/app`);
+  mainWindow.loadURL(`http://apple.local:3000/app`);
 
   globalShortcut.register('CommandOrControl+Alt+E', function () {
     // Open the DevTools.
