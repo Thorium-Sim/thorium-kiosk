@@ -4,15 +4,16 @@
   "description": "A client application for Thorium",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-packager . Thorium --platform=darwin --arch=x64"
   },
-  "build" : {
+  "build": {
     "appId": "comp.alexanderson.thoriumclient",
     "mac": {
       "category": "public.app-category.entertainment",
       "target": "dmg",
-      "icon":null
-    }  
+      "icon": null
+    }
   },
   "repository": {
     "type": "git",
@@ -31,9 +32,13 @@
   },
   "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
-    "electron-prebuilt": "^1.2.0"
+    "electron-packager": "^9.0.1",
+    "electron-prebuilt": "^1.4.13"
   },
   "dependencies": {
-    "node-notifier": "^5.0.2"
+    "dialogs": "^1.1.20",
+    "electron-prompt": "^0.3.0",
+    "smalltalk": "^2.4.1",
+    "udp-discovery": "0.0.3"
   }
 }
