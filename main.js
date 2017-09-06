@@ -7,12 +7,11 @@ const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 const os = require("os");
 const prompt = require("electron-prompt");
+const path = require('path')
+const url = require('url')
 
 const Discovery = require('udp-discovery').Discovery;
-const discover = new Discovery();
 
-discover.on('MessageBus', gotEvent);
-discover.announce('client', {}, 500, true);
 
 const dialog = electron.dialog;
 const globalShortcut = electron.globalShortcut;
@@ -21,26 +20,53 @@ const globalShortcut = electron.globalShortcut;
 let mainWindow;
 let uri;
 
-function gotEvent(event, data) {
-  if (event === 'ClientConnect'){
-    uri = `http://${data.address}:${data.port}/client`
-    if (!mainWindow) {
-      createWindow();
-    }
-  }
-}
-
-function createWindow() {
-  // Create the browser window.
+app.on("ready", function() {
+  const discover = new Discovery();
   mainWindow = new BrowserWindow({ width: 800, height: 600, kiosk: true });
   let webContents = mainWindow.webContents;
+  
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
   webContents.once("did-start-loading", () => {
     mainWindow.webContents.executeJavaScript(
       "localStorage.setItem('thorium_clientId','" + os.hostname() + "');"
     );
   });
 
-  // and load the index.html of the app.
+  globalShortcut.register("Alt+C", function() {
+    prompt({
+      title: "Enter the IP address of the server",
+      label: "URL:",
+      value: "192.168.1.4",
+      inputAttrs: {
+        type: "text"
+      }
+    })
+      .then(r => {
+        mainWindow.loadURL(`http://${r}:3000/client`);
+      })
+      .catch(console.error);
+  });
+
+  discover.on('MessageBus', gotEvent);
+  discover.announce('client', {}, 500, true);
+});
+
+function gotEvent(event, data) {
+  if (event === 'ClientConnect'){
+    uri = `http://${data.address}:${data.port || 3000}/client`
+    if (!mainWindow) {
+      triggerWindow();
+    }
+  }
+}
+
+function triggerWindow() {
+  // Create the browser window.
   mainWindow.loadURL(uri);
 
   globalShortcut.register("CommandOrControl+Alt+E", function() {
@@ -61,30 +87,6 @@ function createWindow() {
       .catch(console.error);
   });
 
-  globalShortcut.register("Alt+C", function() {
-    prompt({
-      title: "Enter the IP address of the server",
-      label: "URL:",
-      value: "192.168.1.4",
-      inputAttrs: {
-        type: "text"
-      }
-    })
-      .then(r => {
-        console.log("result", r); //null if window was closed, or user clicked Cancel
-      })
-      .catch(console.error);
-    /* smalltalk
-    .prompt("Question", "What is the IP address or host name of the server?", "")
-    .then(
-      function(value) {
-        console.log(value);
-      },
-      function() {
-        console.log("cancel");
-      }
-    );*/
-  });
   globalShortcut.register("CommandOrControl+Q", function() {
     // Do nothing.
   });
@@ -125,7 +127,6 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
 
 // Quit when all windows are closed.
 app.on("window-all-closed", function() {
