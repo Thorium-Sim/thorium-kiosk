@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . Thorium --platform=darwin --arch=x64 --overwrite"
+    "build": "electron-packager . Thorium --platform=darwin --arch=x64 --overwrite --icon=icon.icns"
   },
   "build": {
     "appId": "comp.alexanderson.thoriumclient",
