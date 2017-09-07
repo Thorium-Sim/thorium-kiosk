@@ -62,7 +62,7 @@ app.on("ready", function() {
 
   const discover = new Discovery();
   mainWindow = new BrowserWindow({
-    backgroundColor: '#2e2c29',
+    backgroundColor: "#2e2c29",
     width: 800,
     height: 600,
     kiosk: false,
@@ -80,7 +80,6 @@ app.on("ready", function() {
       slashes: true
     })
   );
-
   webContents.once("did-start-loading", () => {
     mainWindow.webContents.executeJavaScript(
       "localStorage.setItem('thorium_clientId','" + os.hostname() + "');"
@@ -88,41 +87,46 @@ app.on("ready", function() {
   });
 
   globalShortcut.register("CommandOrControl+D", function() {
-    prompt({
-      title: "Enter the IP address of the server",
-      label: "URL:",
-      value: "192.168.1.4",
-      inputAttrs: {
-        type: "text"
-      }
-    })
-      .then(r => {
-        mainWindow.loadURL(`http://${r}:3000/client`);
+    console.log(mainWindow.isKiosk())
+    if (!mainWindow.isKiosk()) {
+      prompt({
+        title: "Enter the IP address of the server",
+        label: "URL:",
+        value: "192.168.1.4",
+        inputAttrs: {
+          type: "text"
+        }
       })
-      .catch(console.error);
+        .then(r => {
+          mainWindow.loadURL(`http://${r}:3000/client`);
+          triggerWindow();
+        })
+        .catch(console.error);
+    }
   });
-  discover.on('MessageBus', gotEvent);
-  discover.announce('client', {}, 500, true);
+  discover.on("MessageBus", gotEvent);
+  discover.announce("client", {}, 500, true);
 });
 
 function gotEvent(event, data) {
-  if (event === 'ClientConnect'){
-    uri = `http://${data.address}:${data.port || 3000}/client`
-    if (uri !== mainWindow.webContents.getURL().replace(`#`,``)) {
+  if (event === "ClientConnect") {
+    uri = `http://${data.address}:${data.port || 3000}/client`;
+    if (uri !== mainWindow.webContents.getURL().replace(`#`, ``)) {
       mainWindow.loadURL(uri);
+      triggerWindow();      
     }
   }
 }
 
 function triggerWindow() {
+  mainWindow.setKiosk(true);
+  
   // Create the browser window.
-  mainWindow.loadURL(uri);
-
   globalShortcut.register("CommandOrControl+Alt+E", function() {
     // Open the DevTools.
     prompt({
-      title: "You must enter the password to open the dev tools",
-      label: "Password:",
+      title: "",
+      label: "You must enter the password to open the dev tools:",
       value: "",
       inputAttrs: {
         type: "password"
@@ -136,7 +140,7 @@ function triggerWindow() {
       .catch(console.error);
   });
 
-  globalShortcut.register("CommandOrControl+Q", function() {
+  globalShortcut.register("CommandOrControl+Q", function(evt) {
     // Do nothing.
   });
 
@@ -151,11 +155,11 @@ function triggerWindow() {
   globalShortcut.register("CommandOrControl+Alt+I", function() {
     // Do nothing.
   });
-  globalShortcut.register("CommandOrControl+K", function() {
-    if (mainWindow.isKiosk) {
+  globalShortcut.register("CommandOrControl+Alt+K", function() {
+    if (mainWindow.isKiosk()) {
       prompt({
-        title: "You must enter the password to exit kiosk mode",
-        label: "Password:",
+        title: "",
+        label: "You must enter the password to exit kiosk mode:",
         value: "",
         inputAttrs: {
           type: "password"
@@ -163,7 +167,7 @@ function triggerWindow() {
       })
         .then(r => {
           if (r === password) {
-            mainWindow.setKiosk(false);            
+            mainWindow.setKiosk(false);
           } //null if window was closed, or user clicked Cancel
         })
         .catch(console.error);
@@ -173,8 +177,8 @@ function triggerWindow() {
   });
   globalShortcut.register("CommandOrControl+Alt+Q", function() {
     prompt({
-      title: "You must enter the password to quit",
-      label: "Password:",
+      title: "",
+      label: "You must enter the password to quit:",
       value: "",
       inputAttrs: {
         type: "password"
