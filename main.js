@@ -22,7 +22,7 @@ let uri;
 
 app.on("ready", function() {
   const discover = new Discovery();
-  mainWindow = new BrowserWindow({ width: 800, height: 600, kiosk: true });
+  mainWindow = new BrowserWindow({ backgroundColor: '#2e2c29', width: 800, height: 600, kiosk: false });
   let webContents = mainWindow.webContents;
   
   mainWindow.loadURL(url.format({
@@ -51,7 +51,6 @@ app.on("ready", function() {
       })
       .catch(console.error);
   });
-
   discover.on('MessageBus', gotEvent);
   discover.announce('client', {}, 500, true);
 });
@@ -59,8 +58,8 @@ app.on("ready", function() {
 function gotEvent(event, data) {
   if (event === 'ClientConnect'){
     uri = `http://${data.address}:${data.port || 3000}/client`
-    if (!mainWindow) {
-      triggerWindow();
+    if (uri !== mainWindow.webContents.getURL().replace(`#`,``)) {
+      mainWindow.loadURL(uri);
     }
   }
 }
