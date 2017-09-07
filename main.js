@@ -15,6 +15,7 @@ const sleepMode = require("sleep-mode");
 const shell = electron.shell;
 
 const Discovery = require("udp-discovery").Discovery;
+const storage = require('electron-json-storage');
 
 const freakout = require("./freakout");
 
@@ -73,13 +74,21 @@ app.on("ready", function() {
   });
   let webContents = mainWindow.webContents;
 
-  mainWindow.loadURL(
-    url.format({
-      pathname: path.join(__dirname, "index.html"),
-      protocol: "file:",
-      slashes: true
-    })
-  );
+  storage.get('url', function(err, res){
+    if (res.url) {
+      mainWindow.loadURL(res.url);
+      triggerWindow();      
+    } else {
+      mainWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, "index.html"),
+          protocol: "file:",
+          slashes: true
+        })
+      );
+    }
+  })  
+
   webContents.once("did-start-loading", () => {
     mainWindow.webContents.executeJavaScript(
       "localStorage.setItem('thorium_clientId','" + os.hostname() + "');"
@@ -87,8 +96,35 @@ app.on("ready", function() {
   });
 
   globalShortcut.register("CommandOrControl+D", function() {
-    console.log(mainWindow.isKiosk())
-    if (!mainWindow.isKiosk()) {
+    if (mainWindow.isKiosk()) {
+      prompt({
+        title: "",
+        label: "You must enter the password to open the dev tools:",
+        value: "",
+        inputAttrs: {
+          type: "password"
+        }
+      })
+        .then(r => {
+          if (r === password) {
+            prompt({
+              title: "Enter the IP address of the server",
+              label: "URL:",
+              value: "192.168.1.4",
+              inputAttrs: {
+                type: "text"
+              }
+            })
+              .then(r => {
+                storage.set('url', {url:`http://${r}:3000/client`})
+                mainWindow.loadURL(`http://${r}:3000/client`);
+                triggerWindow();
+              })
+              .catch(console.error);
+          } //null if window was closed, or user clicked Cancel
+        })
+        .catch(console.error);
+    } else {
       prompt({
         title: "Enter the IP address of the server",
         label: "URL:",
@@ -98,6 +134,7 @@ app.on("ready", function() {
         }
       })
         .then(r => {
+          storage.set('url', {url:`http://${r}:3000/client`})          
           mainWindow.loadURL(`http://${r}:3000/client`);
           triggerWindow();
         })
@@ -113,6 +150,7 @@ function gotEvent(event, data) {
     uri = `http://${data.address}:${data.port || 3000}/client`;
     if (uri !== mainWindow.webContents.getURL().replace(`#`, ``)) {
       mainWindow.loadURL(uri);
+      storage.set('url', {url:uri})      
       triggerWindow();      
     }
   }
