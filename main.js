@@ -62,6 +62,7 @@ app.on("ready", function() {
 
   const discover = new Discovery();
   mainWindow = new BrowserWindow({
+    backgroundColor: '#2e2c29',
     width: 800,
     height: 600,
     kiosk: false,
@@ -100,16 +101,15 @@ app.on("ready", function() {
       })
       .catch(console.error);
   });
-
-  discover.on("MessageBus", gotEvent);
-  discover.announce("client", {}, 500, true);
+  discover.on('MessageBus', gotEvent);
+  discover.announce('client', {}, 500, true);
 });
 
 function gotEvent(event, data) {
-  if (event === "ClientConnect") {
-    uri = `http://${data.address}:${data.port || 3000}/client`;
-    if (!mainWindow) {
-      triggerWindow();
+  if (event === 'ClientConnect'){
+    uri = `http://${data.address}:${data.port || 3000}/client`
+    if (uri !== mainWindow.webContents.getURL().replace(`#`,``)) {
+      mainWindow.loadURL(uri);
     }
   }
 }
