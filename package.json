@@ -5,7 +5,9 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . Thorium --platform=darwin --arch=x64 --overwrite --icon=icon.icns"
+    "build": "electron-packager . Thorium --platform=darwin --arch=x64 --overwrite --icon=icon.icns",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "build": {
     "appId": "comp.alexanderson.thoriumclient",
@@ -43,6 +45,8 @@
     "robotjs": "^0.4.7",
     "sleep-mode": "^1.1.0",
     "smalltalk": "^2.4.1",
-    "udp-discovery": "0.0.3"
-  }
+    "udp-discovery": "0.0.3",
+    "snyk": "^1.41.1"
+  },
+  "snyk": true
 }
