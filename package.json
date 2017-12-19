@@ -42,7 +42,7 @@
     "power-off": "^1.1.2",
     "robotjs": "^0.4.7",
     "sleep-mode": "^1.1.0",
-    "smalltalk": "^2.4.1",
+    "smalltalk": "^2.5.1",
     "udp-discovery": "0.0.3"
   }
 }
