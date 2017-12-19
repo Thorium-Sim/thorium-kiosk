@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/electron/electron-quick-start#readme",
   "devDependencies": {
-    "electron-packager": "^9.0.1"
+    "electron-packager": "^10.1.0"
   },
   "dependencies": {
     "dialogs": "^1.1.20",
