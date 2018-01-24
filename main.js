@@ -1,7 +1,5 @@
 const electron = require("electron");
 // Module to control application life.
-const password = "rommel1942";
-
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
@@ -9,16 +7,11 @@ const os = require("os");
 const prompt = require("electron-prompt");
 const path = require("path");
 const url = require("url");
-
 const powerOff = require("power-off");
 const sleepMode = require("sleep-mode");
 const shell = electron.shell;
-
-const Discovery = require("udp-discovery").Discovery;
-const storage = require('electron-json-storage');
-
+const storage = require("electron-json-storage");
 const freakout = require("./freakout");
-
 const dialog = electron.dialog;
 const globalShortcut = electron.globalShortcut;
 // Keep a global reference of the window object, if you don't, the window will
@@ -61,7 +54,6 @@ app.on("ready", function() {
     event.returnValue = "pong";
   });
 
-  const discover = new Discovery();
   mainWindow = new BrowserWindow({
     backgroundColor: "#2e2c29",
     width: 800,
@@ -74,10 +66,10 @@ app.on("ready", function() {
   });
   let webContents = mainWindow.webContents;
 
-  storage.get('url', function(err, res){
-    if (res.url) {
+  storage.get("url", function(err, res) {
+    if (res && res.url) {
       mainWindow.loadURL(res.url);
-      triggerWindow();      
+      triggerWindow();
     } else {
       mainWindow.loadURL(
         url.format({
@@ -87,95 +79,71 @@ app.on("ready", function() {
         })
       );
     }
-  })  
+  });
 
-  webContents.once("did-start-loading", () => {
+  webContents.on("did-start-loading", () => {
     mainWindow.webContents.executeJavaScript(
       "localStorage.setItem('thorium_clientId','" + os.hostname() + "');"
     );
   });
-
-  globalShortcut.register("CommandOrControl+D", function() {
-    if (mainWindow.isKiosk()) {
-      prompt({
-        title: "",
-        label: "You must enter the password to open the dev tools:",
-        value: "",
-        inputAttrs: {
-          type: "password"
-        }
-      })
-        .then(r => {
-          if (r === password) {
-            prompt({
-              title: "Enter the IP address of the server",
-              label: "URL:",
-              value: "192.168.1.4",
-              inputAttrs: {
-                type: "text"
-              }
-            })
-              .then(r => {
-                storage.set('url', {url:`http://${r}:3000/client`})
-                mainWindow.loadURL(`http://${r}:3000/client`);
-                triggerWindow();
-              })
-              .catch(console.error);
-          } //null if window was closed, or user clicked Cancel
+  webContents.on("did-fail-load", () => {
+    // Load the default page
+    mainWindow &&
+      mainWindow.loadURL(
+        url.format({
+          pathname: path.join(__dirname, "index.html"),
+          protocol: "file:",
+          slashes: true
         })
-        .catch(console.error);
-    } else {
+      );
+  });
+  globalShortcut.register("CommandOrControl+D", function() {
+    storage.get("url", function(err, res) {
       prompt({
         title: "Enter the IP address of the server",
         label: "URL:",
-        value: "192.168.1.4",
+        value: res.url,
         inputAttrs: {
           type: "text"
         }
       })
         .then(r => {
-          storage.set('url', {url:`http://${r}:3000/client`})          
-          mainWindow.loadURL(`http://${r}:3000/client`);
+          r = r.replace("http://", "").replace(":3000/client", "");
+          storage.set("url", { url: `http://${r}:3000/client` });
+          mainWindow && mainWindow.loadURL(`http://${r}:3000/client`);
           triggerWindow();
         })
         .catch(console.error);
-    }
+    });
   });
-  discover.on("MessageBus", gotEvent);
-  discover.announce("client", {}, 500, true);
-});
 
-function gotEvent(event, data) {
-  if (event === "ClientConnect") {
-    uri = `http://${data.address}:${data.port || 3000}/client`;
-    if (uri !== mainWindow.webContents.getURL().replace(`#`, ``)) {
-      mainWindow.loadURL(uri);
-      storage.set('url', {url:uri})      
-      triggerWindow();      
+  // Auto-discovery
+  const bonjour = require('bonjour')();
+  bonjour.find({ type: 'http' }, newService);
+  
+  function newService(service) {
+    if (service.name === "Thorium" && service.type === 'http') {
+      const ipregex = /[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}/gi
+      const address = service.addresses.find(a => ipregex.test(a));
+      const uri = `http://${address}:${service.port || 3000}/client`;
+      if (uri !== mainWindow.webContents.getURL().replace(`#`, ``)) {
+        mainWindow.loadURL(uri);
+        storage.set("url", { url: uri });
+        triggerWindow();
+      }
     }
   }
-}
+});
+
+
 
 function triggerWindow() {
   mainWindow.setKiosk(true);
-  
+
   // Create the browser window.
   globalShortcut.register("CommandOrControl+Alt+E", function() {
     // Open the DevTools.
-    prompt({
-      title: "",
-      label: "You must enter the password to open the dev tools:",
-      value: "",
-      inputAttrs: {
-        type: "password"
-      }
-    })
-      .then(r => {
-        if (r === password) {
-          mainWindow.webContents.openDevTools();
-        } //null if window was closed, or user clicked Cancel
-      })
-      .catch(console.error);
+    mainWindow.webContents.openDevTools();
   });
 
   globalShortcut.register("CommandOrControl+Q", function(evt) {
@@ -195,39 +163,13 @@ function triggerWindow() {
   });
   globalShortcut.register("CommandOrControl+Alt+K", function() {
     if (mainWindow.isKiosk()) {
-      prompt({
-        title: "",
-        label: "You must enter the password to exit kiosk mode:",
-        value: "",
-        inputAttrs: {
-          type: "password"
-        }
-      })
-        .then(r => {
-          if (r === password) {
-            mainWindow.setKiosk(false);
-          } //null if window was closed, or user clicked Cancel
-        })
-        .catch(console.error);
+      mainWindow.setKiosk(false);
     } else {
       mainWindow.setKiosk(true);
     }
   });
   globalShortcut.register("CommandOrControl+Alt+Q", function() {
-    prompt({
-      title: "",
-      label: "You must enter the password to quit:",
-      value: "",
-      inputAttrs: {
-        type: "password"
-      }
-    })
-      .then(r => {
-        if (r === password) {
-          app.quit();
-        } //null if window was closed, or user clicked Cancel
-      })
-      .catch(console.error);
+    app.quit();
   });
   // Emitted when the window is closed.
   mainWindow.on("closed", function() {

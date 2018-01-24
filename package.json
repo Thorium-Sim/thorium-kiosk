@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . Thorium --platform=darwin --arch=x64 --overwrite --icon=icon.icns"
+    "build": "electron-packager . Thorium --all --overwrite --icon=icon.icns"
   },
   "build": {
     "appId": "comp.alexanderson.thoriumclient",
@@ -35,14 +35,13 @@
     "electron-packager": "^9.0.1"
   },
   "dependencies": {
+    "bonjour": "^3.5.0",
     "dialogs": "^1.1.20",
     "electron": "^1.6.13",
     "electron-json-storage": "^3.1.0",
     "electron-prompt": "^0.3.0",
     "power-off": "^1.1.2",
     "robotjs": "^0.4.7",
-    "sleep-mode": "^1.1.0",
-    "smalltalk": "^2.4.1",
-    "udp-discovery": "0.0.3"
+    "sleep-mode": "^1.1.0"
   }
 }

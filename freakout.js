@@ -1,4 +1,4 @@
-var robot = require("robotjs");
+/*var robot = require("robotjs");
 //console.log(process.version);
 module.exports = function() {
   // Speed up the mouse.
@@ -20,4 +20,6 @@ module.exports = function() {
     setTimeout(moveMouse, 20);
   }
 }
+*/
 
+module.exports = function() {}
