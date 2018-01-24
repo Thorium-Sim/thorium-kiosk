@@ -3,24 +3,24 @@ const electron = require("electron");
 const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
-const os = require("os");
 const prompt = require("electron-prompt");
 const path = require("path");
 const url = require("url");
 const powerOff = require("power-off");
 const sleepMode = require("sleep-mode");
 const shell = electron.shell;
-const storage = require("electron-json-storage");
 const freakout = require("./freakout");
-const dialog = electron.dialog;
 const globalShortcut = electron.globalShortcut;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
-let uri;
 
 app.on("ready", function() {
   const ipcMain = electron.ipcMain;
+  ipcMain.on('loadPage', function(evt, uri) {
+    mainWindow && mainWindow.loadURL(uri);
+    triggerWindow();
+  });
   ipcMain.on("synchronous-message", function(event, arg) {
     if (arg) {
       switch (arg.action) {
@@ -49,6 +49,8 @@ app.on("ready", function() {
         case "quit":
           app.quit();
           break;
+        default:
+          break;
       }
     }
     event.returnValue = "pong";
@@ -66,26 +68,14 @@ app.on("ready", function() {
   });
   let webContents = mainWindow.webContents;
 
-  storage.get("url", function(err, res) {
-    if (res && res.url) {
-      mainWindow.loadURL(res.url);
-      triggerWindow();
-    } else {
-      mainWindow.loadURL(
-        url.format({
-          pathname: path.join(__dirname, "index.html"),
-          protocol: "file:",
-          slashes: true
-        })
-      );
-    }
-  });
+  mainWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, "index.html"),
+      protocol: "file:",
+      slashes: true
+    })
+  );
 
-  webContents.on("did-start-loading", () => {
-    mainWindow.webContents.executeJavaScript(
-      "localStorage.setItem('thorium_clientId','" + os.hostname() + "');"
-    );
-  });
   webContents.on("did-fail-load", () => {
     // Load the default page
     mainWindow &&
@@ -98,44 +88,50 @@ app.on("ready", function() {
       );
   });
   globalShortcut.register("CommandOrControl+D", function() {
-    storage.get("url", function(err, res) {
-      prompt({
-        title: "Enter the IP address of the server",
-        label: "URL:",
-        value: res.url,
-        inputAttrs: {
-          type: "text"
-        }
+    prompt({
+      title: "Enter the IP address of the server, including the port",
+      label: "URL:",
+      value: "",
+      inputAttrs: {
+        type: "text"
+      }
+    })
+      .then(r => {
+        r = r.replace("http://", "").replace(/:[0-9]{4}\/client/gi, "");
+        mainWindow && mainWindow.loadURL(`http://${r}/client`);
+        triggerWindow();
       })
-        .then(r => {
-          r = r.replace("http://", "").replace(":3000/client", "");
-          storage.set("url", { url: `http://${r}:3000/client` });
-          mainWindow && mainWindow.loadURL(`http://${r}:3000/client`);
-          triggerWindow();
-        })
-        .catch(console.error);
-    });
+      .catch(console.error);
   });
 
   // Auto-discovery
-  const bonjour = require('bonjour')();
-  bonjour.find({ type: 'http' }, newService);
-  
+  const bonjour = require("bonjour")();
+  bonjour.find({ type: "thorium-http" }, newService);
+  const servers = [];
+  const autoLoad = () => {
+    if (servers.length === 1) {
+      mainWindow.loadURL(servers[0].url);
+      triggerWindow();
+    } else if (servers.length === 0) {
+      setTimeout(autoLoad, 3000);
+    }
+  };
+  setTimeout(autoLoad, 3000);
   function newService(service) {
-    if (service.name === "Thorium" && service.type === 'http') {
-      const ipregex = /[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}/gi
+    if (service.type === "app") {
+      const ipregex = /[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}/gi;
       const address = service.addresses.find(a => ipregex.test(a));
       const uri = `http://${address}:${service.port || 3000}/client`;
-      if (uri !== mainWindow.webContents.getURL().replace(`#`, ``)) {
-        mainWindow.loadURL(uri);
-        storage.set("url", { url: uri });
-        triggerWindow();
-      }
+      servers.push({
+        name: service.name,
+        url: uri
+      });
+      setTimeout(() => {
+        mainWindow.webContents.send("updateServers", servers);
+      }, 500);
     }
   }
 });
-
-
 
 function triggerWindow() {
   mainWindow.setKiosk(true);
@@ -146,7 +142,7 @@ function triggerWindow() {
     mainWindow.webContents.openDevTools();
   });
 
-  globalShortcut.register("CommandOrControl+Q", function(evt) {
+  globalShortcut.register("CommandOrControl+Q", function() {
     // Do nothing.
   });
 
@@ -160,6 +156,7 @@ function triggerWindow() {
 
   globalShortcut.register("CommandOrControl+Alt+I", function() {
     // Do nothing.
+    mainWindow.webContents.openDevTools();
   });
   globalShortcut.register("CommandOrControl+Alt+K", function() {
     if (mainWindow.isKiosk()) {
