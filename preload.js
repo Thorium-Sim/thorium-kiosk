@@ -3,7 +3,17 @@ var webFrame = require("electron").webFrame;
 webFrame.setVisualZoomLevelLimits(1, 1);
 webFrame.setLayoutZoomLevelLimits(0, 0);
 
-localStorage.setItem("thorium_clientId", require("os").hostname());
+if (!localStorage.getItem("thorium_clientId")) {
+  localStorage.setItem("thorium_clientId", require("os").hostname());
+}
+if (localStorage.getItem("thorium_url")) {
+  ipcRenderer.send("loadPage", localStorage.getItem("thorium_url"));
+}
+window.loadPage = function loadPage(url) {
+  localStorage.setItem("thorium_url", url);
+  ipcRenderer.send("loadPage", url);
+  return;
+};
 
 const thorium = {
   sendMessage: function(arg) {
@@ -11,6 +21,9 @@ const thorium = {
   }
 };
 
+ipcRenderer.on("clearUrl", function() {
+  localStorage.setItem("thorium_url", "");
+});
 ipcRenderer.on("updateServers", function updateServers(e, servers) {
   if (servers.length === 0) {
     document.getElementById("loading").classList.remove("hidden");
@@ -24,10 +37,5 @@ ipcRenderer.on("updateServers", function updateServers(e, servers) {
   );
   document.getElementById("serverList").innerHTML = markup;
 });
-
-window.loadPage = function loadPage(url) {
-  ipcRenderer.send("loadPage", url);
-  return;
-};
 
 window.thorium = thorium;

@@ -17,7 +17,7 @@ let mainWindow;
 
 app.on("ready", function() {
   const ipcMain = electron.ipcMain;
-  ipcMain.on('loadPage', function(evt, uri) {
+  ipcMain.on("loadPage", function(evt, uri) {
     mainWindow && mainWindow.loadURL(uri);
     triggerWindow();
   });
@@ -86,6 +86,7 @@ app.on("ready", function() {
           slashes: true
         })
       );
+    mainWindow.webContents.send("clearUrl");
   });
   globalShortcut.register("CommandOrControl+D", function() {
     prompt({
