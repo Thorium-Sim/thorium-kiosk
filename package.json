@@ -1,6 +1,6 @@
 {
   "name": "thorium-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A client application for Thorium",
   "main": "main.js",
   "scripts": {
