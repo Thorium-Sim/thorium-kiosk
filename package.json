@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "build --mac",
-    "ship": "build --mac -p always",
+    "build": "build -mwl",
+    "ship": "build -mwl -p always",
     "postinstall": "electron-builder install-app-deps"
   },
   "build": {
