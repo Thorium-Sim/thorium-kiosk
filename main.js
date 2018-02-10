@@ -11,6 +11,8 @@ const sleepMode = require("sleep-mode");
 const shell = electron.shell;
 const freakout = require("./freakout");
 const globalShortcut = electron.globalShortcut;
+const {autoUpdater} = require("electron-updater");
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -98,8 +100,8 @@ app.on("ready", function() {
       }
     })
       .then(r => {
-        r = r.replace("http://", "").replace(/:[0-9]{4}\/client/gi, "");
-        mainWindow && mainWindow.loadURL(`http://${r}/client`);
+        const res = r.replace("http://", "").replace(/:[0-9]{4}\/client/gi, "");
+        mainWindow && mainWindow.loadURL(`http://${res}/client`);
         triggerWindow();
       })
       .catch(console.error);
@@ -117,14 +119,14 @@ app.on("ready", function() {
       setTimeout(autoLoad, 3000);
     }
   };
-  setTimeout(autoLoad, 3000);
+  const autoloadTimeout = setTimeout(autoLoad, 3000);
   function newService(service) {
-    if (service.type === "app") {
+    if (service.type === "thorium-http") {
       const ipregex = /[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}/gi;
       const address = service.addresses.find(a => ipregex.test(a));
-      const uri = `http://${address}:${service.port || 3000}/client`;
+      const uri = `http://${address}:${service.port}/client`;
       servers.push({
-        name: service.name,
+        name: service.host,
         url: uri
       });
       setTimeout(() => {
@@ -132,6 +134,15 @@ app.on("ready", function() {
       }, 500);
     }
   }
+  autoUpdater.checkForUpdates();
+  autoUpdater.on('update-downloaded', () => {
+    mainWindow.webContents.send('updateReady');
+    clearTimeout(autoloadTimeout);
+  });
+
+  ipcMain.on("quitAndInstall", () => {
+    autoUpdater.quitAndInstall();
+  });
 });
 
 function triggerWindow() {

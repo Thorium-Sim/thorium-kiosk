@@ -1,0 +1,4 @@
+appId: us.fyreworks.thoriumclient
+publish:
+    provider: github
+    token: 808284f2a8da348b1e1c92e2426ee861b53bb728

@@ -1,45 +1,48 @@
 {
   "name": "thorium-client",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "A client application for Thorium",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . Thorium --all --overwrite --icon=icon.icns"
+    "build": "build --mac",
+    "ship": "build --mac -p always",
+    "postinstall": "electron-builder install-app-deps"
   },
   "build": {
-    "appId": "comp.alexanderson.thoriumclient",
+    "appId": "us.fyreworks.thoriumclient",
+    "productName": "Thorium Client",
+    "copyright":"Copyright © 2018 Fyreworks LLC",
     "mac": {
       "category": "public.app-category.entertainment",
-      "target": "dmg",
-      "icon": null
+      "icon": "icon.icns"
+    },
+    "win": {
+      "icon":"icon.ico"
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/electron/electron-quick-start.git"
-  },
+  "repository": "https://github.com/thorium-sim/thorium-kiosk",
   "keywords": [
     "Electron",
     "quick",
     "start",
     "tutorial"
   ],
-  "author": "Alex Anderson <alexanderson1993@gmail.com>",
-  "license": "CC0-1.0",
-  "bugs": {
-    "url": "https://github.com/electron/electron-quick-start/issues"
-  },
-  "homepage": "https://github.com/electron/electron-quick-start#readme",
+  "author": "Alex Anderson <alex@fyreworks.us>",
+  "license": "Apache 2.0",
+  "homepage": "https://thoriumsim.com",
   "devDependencies": {
+    "electron": "^1.7.11",
+    "electron-builder": "^19.56.0",
+    "electron-builder-squirrel-windows": "^20.0.3",
     "electron-packager": "^9.0.1"
   },
   "dependencies": {
     "bonjour": "^3.5.0",
     "dialogs": "^1.1.20",
-    "electron": "^1.7.11",
     "electron-json-storage": "^3.1.0",
     "electron-prompt": "^0.3.0",
+    "electron-updater": "^2.20.1",
     "power-off": "^1.1.2",
     "robotjs": "^0.4.7",
     "sleep-mode": "^1.1.0"

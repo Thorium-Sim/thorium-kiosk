@@ -15,9 +15,18 @@ window.loadPage = function loadPage(url) {
   return;
 };
 
+ipcRenderer.on('updateReady', function() {
+  // changes the text of the button
+  var container = document.getElementById('ready');
+  container.classList.remove('hidden');
+});
+
 const thorium = {
   sendMessage: function(arg) {
     return ipcRenderer.sendSync("synchronous-message", arg);
+  },
+  runUpdate: function() {
+    ipcRenderer.send('quitAndInstall');
   }
 };
 
