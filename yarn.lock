@@ -94,25 +94,25 @@ ansi-styles@^3.1.0:
   dependencies:
     color-convert "^1.9.0"
 
-app-builder-bin-linux@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/app-builder-bin-linux/-/app-builder-bin-linux-1.2.1.tgz#dbcc72f662cfc5ee9945c69a3ffae538137aa822"
+app-builder-bin-linux@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-linux/-/app-builder-bin-linux-1.3.1.tgz#4e1bb0f0e7c7b15ed134193edb1797a1fc18a40c"
 
-app-builder-bin-mac@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/app-builder-bin-mac/-/app-builder-bin-mac-1.2.1.tgz#e5f6123947ab397bf8e6b76a0a7ad5e22c51a877"
+app-builder-bin-mac@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-mac/-/app-builder-bin-mac-1.3.1.tgz#329357417ea0919adf094855404f229c5ff5f12f"
 
-app-builder-bin-win@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/app-builder-bin-win/-/app-builder-bin-win-1.2.1.tgz#66480c537c662d29a2ff396254d96c31ba32e303"
+app-builder-bin-win@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-win/-/app-builder-bin-win-1.3.1.tgz#a819d0ba9bb3831d69ab43b744a2794686bfc547"
 
-app-builder-bin@1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-1.2.1.tgz#a4d06a3e4a7555260eaf1f4cd9fe610c839ad4ee"
+app-builder-bin@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-1.3.1.tgz#ba24cb6778c56ba925f282be42aa5dcccc533201"
   optionalDependencies:
-    app-builder-bin-linux "1.2.1"
-    app-builder-bin-mac "1.2.1"
-    app-builder-bin-win "1.2.1"
+    app-builder-bin-linux "1.3.1"
+    app-builder-bin-mac "1.3.1"
+    app-builder-bin-win "1.3.1"
 
 aproba@^1.0.3:
   version "1.2.0"
@@ -404,12 +404,12 @@ builder-util@^4.2.2:
     temp-file "^3.1.1"
     tunnel-agent "^0.6.0"
 
-builder-util@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-5.1.1.tgz#efd0adba9cfd26bdeac49b082b48e876facb4c7a"
+builder-util@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-5.2.0.tgz#dd5631b1611e60b35c9fa87ab5a266175db0b0a7"
   dependencies:
     "7zip-bin" "~3.1.0"
-    app-builder-bin "1.2.1"
+    app-builder-bin "1.3.1"
     bluebird-lst "^1.0.5"
     builder-util-runtime "^4.0.5"
     chalk "^2.3.0"
@@ -808,13 +808,13 @@ electron-builder-lib@19.56.0:
     semver "^5.5.0"
     temp-file "^3.1.1"
 
-electron-builder-squirrel-windows@^20.0.3:
-  version "20.0.3"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-20.0.3.tgz#391b322447169f9a4c64c4e4544a235247032d0a"
+electron-builder-squirrel-windows@^20.0.4:
+  version "20.0.4"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-20.0.4.tgz#9a45da916b9b3c4f842af8df431dd194a3722c7e"
   dependencies:
     archiver "^2.1.1"
     bluebird-lst "^1.0.5"
-    builder-util "^5.1.1"
+    builder-util "^5.2.0"
     fs-extra-p "^4.5.0"
     sanitize-filename "^1.6.1"
   optionalDependencies:
