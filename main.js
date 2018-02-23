@@ -130,7 +130,6 @@ app.on("ready", function() {
         url: uri
       });
       setTimeout(() => {
-        console.log(servers);
         mainWindow.webContents.send("updateServers", servers);
       }, 500);
     }
