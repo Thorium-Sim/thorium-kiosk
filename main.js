@@ -11,7 +11,7 @@ const sleepMode = require("sleep-mode");
 const shell = electron.shell;
 const freakout = require("./freakout");
 const globalShortcut = electron.globalShortcut;
-const {autoUpdater} = require("electron-updater");
+const { autoUpdater } = require("electron-updater");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -121,7 +121,7 @@ app.on("ready", function() {
   };
   const autoloadTimeout = setTimeout(autoLoad, 3000);
   function newService(service) {
-    if (service.type === "thorium-http") {
+    if (service.type === "thorium-http" || service.type === "local") {
       const ipregex = /[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}/gi;
       const address = service.addresses.find(a => ipregex.test(a));
       const uri = `http://${address}:${service.port}/client`;
@@ -130,13 +130,14 @@ app.on("ready", function() {
         url: uri
       });
       setTimeout(() => {
+        console.log(servers);
         mainWindow.webContents.send("updateServers", servers);
       }, 500);
     }
   }
   autoUpdater.checkForUpdates();
-  autoUpdater.on('update-downloaded', () => {
-    mainWindow.webContents.send('updateReady');
+  autoUpdater.on("update-downloaded", () => {
+    mainWindow.webContents.send("updateReady");
     clearTimeout(autoloadTimeout);
   });
 
