@@ -27,7 +27,7 @@
   "license": "Apache 2.0",
   "homepage": "https://thoriumsim.com",
   "devDependencies": {
-    "electron": "^1.7.11",
+    "electron": "^1.8.2",
     "electron-builder": "^19.56.0",
     "electron-builder-squirrel-windows": "^20.0.3",
     "electron-packager": "^9.0.1"
