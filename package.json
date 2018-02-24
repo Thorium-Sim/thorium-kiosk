@@ -1,6 +1,6 @@
 {
   "name": "thorium-client",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A client application for Thorium",
   "main": "main.js",
   "scripts": {
@@ -12,22 +12,17 @@
   "build": {
     "appId": "us.fyreworks.thoriumclient",
     "productName": "Thorium Client",
-    "copyright":"Copyright © 2018 Fyreworks LLC",
+    "copyright": "Copyright © 2018 Fyreworks LLC",
     "mac": {
       "category": "public.app-category.entertainment",
       "icon": "icon.icns"
     },
     "win": {
-      "icon":"icon.ico"
+      "icon": "icon.ico"
     }
   },
   "repository": "https://github.com/thorium-sim/thorium-kiosk",
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
-  ],
+  "keywords": ["Electron", "quick", "start", "tutorial"],
   "author": "Alex Anderson <alex@fyreworks.us>",
   "license": "Apache 2.0",
   "homepage": "https://thoriumsim.com",
