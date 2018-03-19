@@ -928,9 +928,9 @@ electron-packager@^9.0.1:
     sanitize-filename "^1.6.0"
     semver "^5.3.0"
 
-electron-prompt@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/electron-prompt/-/electron-prompt-0.3.0.tgz#993373728b97c3809999f24c25e266af121df4ae"
+electron-prompt@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/electron-prompt/-/electron-prompt-0.5.0.tgz#e8ab1ec510aceb162e78639008e5e9ebaf02f07e"
   dependencies:
     doc-ready "^1.0.4"
 
