@@ -39,7 +39,7 @@
     "electron-prompt": "^0.5.0",
     "electron-updater": "^2.20.1",
     "power-off": "^1.1.2",
-    "robotjs": "^0.4.7",
+    "robotjs": "^0.5.1",
     "sleep-mode": "^1.1.0"
   }
 }
