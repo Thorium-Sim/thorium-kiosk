@@ -28,7 +28,7 @@
   "homepage": "https://thoriumsim.com",
   "devDependencies": {
     "electron": "^1.8.4",
-    "electron-builder": "^19.56.0",
+    "electron-builder": "^20.6.2",
     "electron-builder-squirrel-windows": "^20.6.0",
     "electron-packager": "^9.0.1"
   },
