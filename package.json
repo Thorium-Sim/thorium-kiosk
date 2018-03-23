@@ -37,7 +37,7 @@
     "dialogs": "^1.1.20",
     "electron-json-storage": "^4.0.2",
     "electron-prompt": "^0.5.0",
-    "electron-updater": "^2.21.1",
+    "electron-updater": "^2.21.3",
     "power-off": "^1.1.2",
     "robotjs": "^0.5.1",
     "sleep-mode": "^1.1.0"
