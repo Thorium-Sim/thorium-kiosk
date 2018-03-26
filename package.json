@@ -30,7 +30,7 @@
     "electron": "^1.8.4",
     "electron-builder": "^19.56.0",
     "electron-builder-squirrel-windows": "^20.6.0",
-    "electron-packager": "^9.0.1"
+    "electron-packager": "^11.2.0"
   },
   "dependencies": {
     "bonjour": "^3.5.0",
