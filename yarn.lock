@@ -329,7 +329,7 @@ builder-util-runtime@4.0.4:
     fs-extra-p "^4.5.0"
     sax "^1.2.4"
 
-builder-util-runtime@^4.0.4, builder-util-runtime@^4.0.5, builder-util-runtime@~4.0.5:
+builder-util-runtime@^4.0.4, builder-util-runtime@^4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-4.0.5.tgz#5340cf9886b9283ea6e5b20dc09b5e3e461aef62"
   dependencies:
@@ -341,6 +341,15 @@ builder-util-runtime@^4.0.4, builder-util-runtime@^4.0.5, builder-util-runtime@~
 builder-util-runtime@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-4.1.0.tgz#7dcd042d555d2f161a5538d7a0ea8c292daa0683"
+  dependencies:
+    bluebird-lst "^1.0.5"
+    debug "^3.1.0"
+    fs-extra-p "^4.5.2"
+    sax "^1.2.4"
+
+builder-util-runtime@~4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-4.2.0.tgz#c56aa18d34390143da031c418c9d3a055fbd3522"
   dependencies:
     bluebird-lst "^1.0.5"
     debug "^3.1.0"
@@ -924,19 +933,19 @@ electron-publish@19.56.0:
     fs-extra-p "^4.5.0"
     mime "^2.2.0"
 
-electron-updater@^2.21.1:
-  version "2.21.1"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-2.21.1.tgz#d380b0b46873b855d137a6ac88ad1757c1049e1e"
+electron-updater@^2.21.4:
+  version "2.21.4"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-2.21.4.tgz#56326defc8072e78e339cc656838ac78e708f50c"
   dependencies:
     bluebird-lst "^1.0.5"
-    builder-util-runtime "~4.0.5"
+    builder-util-runtime "~4.2.0"
     electron-is-dev "^0.3.0"
     fs-extra-p "^4.5.2"
     js-yaml "^3.11.0"
     lazy-val "^1.0.3"
     lodash.isequal "^4.5.0"
     semver "^5.5.0"
-    source-map-support "^0.5.3"
+    source-map-support "^0.5.4"
 
 electron@^1.8.4:
   version "1.8.4"
