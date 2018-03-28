@@ -121,7 +121,11 @@ app.on("ready", function() {
   };
   const autoloadTimeout = setTimeout(autoLoad, 3000);
   function newService(service) {
-    if (service.type === "thorium-http" || service.type === "local") {
+    if (
+      service.name.indexOf("Thorium") > -1 ||
+      service.type === "thorium-http" ||
+      service.type === "local"
+    ) {
       const ipregex = /[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}\.[0-2]?[0-9]{1,2}/gi;
       const address = service.addresses.find(a => ipregex.test(a));
       const uri = `http://${address}:${service.port}/client`;
