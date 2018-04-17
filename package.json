@@ -1,6 +1,6 @@
 {
   "name": "thorium-client",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A client application for Thorium",
   "main": "main.js",
   "scripts": {
@@ -37,6 +37,7 @@
     "dialogs": "^1.1.20",
     "electron-json-storage": "^4.0.2",
     "electron-prompt": "^0.5.0",
+    "electron-settings": "^3.1.4",
     "electron-updater": "^2.21.1",
     "power-off": "^1.1.2",
     "robotjs": "^0.5.1",
