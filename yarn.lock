@@ -93,25 +93,25 @@ ansi-styles@^3.2.1:
   dependencies:
     color-convert "^1.9.0"
 
-app-builder-bin-linux@1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/app-builder-bin-linux/-/app-builder-bin-linux-1.7.2.tgz#a764c8e52ecf1b5b068f32c820c6daf1ffed6a8f"
+app-builder-bin-linux@1.8.5:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-linux/-/app-builder-bin-linux-1.8.5.tgz#bf001d3ef347e1179680a1760fea83d0832fc344"
 
-app-builder-bin-mac@1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/app-builder-bin-mac/-/app-builder-bin-mac-1.7.2.tgz#c4ee0d950666c97c12a45ac74ec6396be3357644"
+app-builder-bin-mac@1.8.5:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-mac/-/app-builder-bin-mac-1.8.5.tgz#31282504d232081a9de94d377736bf904bbfbd53"
 
-app-builder-bin-win@1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/app-builder-bin-win/-/app-builder-bin-win-1.7.2.tgz#7acac890782f4118f09941b343ba06c56452a6f6"
+app-builder-bin-win@1.8.5:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/app-builder-bin-win/-/app-builder-bin-win-1.8.5.tgz#d7eefc1dff6052e137a3c5d68cd6e68ba862054b"
 
-app-builder-bin@1.7.2:
-  version "1.7.2"
-  resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-1.7.2.tgz#daf67060a6bad8f5f611a0d2876d9db897a83f06"
+app-builder-bin@1.8.5:
+  version "1.8.5"
+  resolved "https://registry.yarnpkg.com/app-builder-bin/-/app-builder-bin-1.8.5.tgz#ac0c0fad3c348ff3bde367e49b25cf5edc414407"
   optionalDependencies:
-    app-builder-bin-linux "1.7.2"
-    app-builder-bin-mac "1.7.2"
-    app-builder-bin-win "1.7.2"
+    app-builder-bin-linux "1.8.5"
+    app-builder-bin-mac "1.8.5"
+    app-builder-bin-win "1.8.5"
 
 aproba@^1.0.3:
   version "1.2.0"
@@ -338,9 +338,9 @@ builder-util-runtime@^4.0.4, builder-util-runtime@^4.0.5, builder-util-runtime@~
     fs-extra-p "^4.5.0"
     sax "^1.2.4"
 
-builder-util-runtime@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-4.1.0.tgz#7dcd042d555d2f161a5538d7a0ea8c292daa0683"
+builder-util-runtime@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-4.2.0.tgz#c56aa18d34390143da031c418c9d3a055fbd3522"
   dependencies:
     bluebird-lst "^1.0.5"
     debug "^3.1.0"
@@ -387,14 +387,14 @@ builder-util@^4.2.2:
     temp-file "^3.1.1"
     tunnel-agent "^0.6.0"
 
-builder-util@^5.6.6:
-  version "5.6.7"
-  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-5.6.7.tgz#662ff2ba4f70416ee0c085126f16af48fbf97900"
+builder-util@^5.7.6:
+  version "5.7.6"
+  resolved "https://registry.yarnpkg.com/builder-util/-/builder-util-5.7.6.tgz#2480c8a233ab7ab05a4f1689892cc39819e768bb"
   dependencies:
     "7zip-bin" "~3.1.0"
-    app-builder-bin "1.7.2"
+    app-builder-bin "1.8.5"
     bluebird-lst "^1.0.5"
-    builder-util-runtime "^4.1.0"
+    builder-util-runtime "^4.2.0"
     chalk "^2.3.2"
     debug "^3.1.0"
     fs-extra-p "^4.5.2"
@@ -482,6 +482,10 @@ cliui@^4.0.0:
     string-width "^2.1.1"
     strip-ansi "^4.0.0"
     wrap-ansi "^2.0.0"
+
+clone@^2.1.1:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
 
 co@^4.6.0:
   version "4.6.0"
@@ -787,13 +791,13 @@ electron-builder-lib@19.56.0:
     semver "^5.5.0"
     temp-file "^3.1.1"
 
-electron-builder-squirrel-windows@^20.6.0:
-  version "20.6.0"
-  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-20.6.0.tgz#ca33f187fa71bbbd171e8412d222468aeab51b44"
+electron-builder-squirrel-windows@^20.9.0:
+  version "20.9.0"
+  resolved "https://registry.yarnpkg.com/electron-builder-squirrel-windows/-/electron-builder-squirrel-windows-20.9.0.tgz#c9bc5002990bca569bde92e4d405b57093c0a238"
   dependencies:
     archiver "^2.1.1"
     bluebird-lst "^1.0.5"
-    builder-util "^5.6.6"
+    builder-util "^5.7.6"
     fs-extra-p "^4.5.2"
     sanitize-filename "^1.6.1"
   optionalDependencies:
@@ -923,6 +927,13 @@ electron-publish@19.56.0:
     chalk "^2.3.0"
     fs-extra-p "^4.5.0"
     mime "^2.2.0"
+
+electron-settings@^3.1.4:
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/electron-settings/-/electron-settings-3.1.4.tgz#1b670837fd00626395714210291fb4af8ff52880"
+  dependencies:
+    clone "^2.1.1"
+    jsonfile "^4.0.0"
 
 electron-updater@^2.21.1:
   version "2.21.1"
