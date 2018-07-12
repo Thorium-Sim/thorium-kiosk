@@ -836,15 +836,16 @@ electron-is-dev@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.3.0.tgz#14e6fda5c68e9e4ecbeff9ccf037cbd7c05c5afe"
 
-electron-json-storage@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/electron-json-storage/-/electron-json-storage-4.1.0.tgz#98edb44995104fb8b5f85b3473217ad52ec7f146"
+electron-json-storage@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/electron-json-storage/-/electron-json-storage-4.1.1.tgz#4995a03e6d44552527bc0e9f6cdc34e98a6dcca7"
   dependencies:
     async "^2.0.0"
+    electron "^2.0.4"
+    lockfile "^1.0.4"
     lodash "^4.0.1"
     mkdirp "^0.5.1"
     rimraf "^2.5.1"
-    rwlock "^5.0.0"
 
 electron-osx-sign@0.4.10:
   version "0.4.10"
@@ -932,6 +933,14 @@ electron-updater@^2.21.8:
 electron@^1.8.4:
   version "1.8.4"
   resolved "https://registry.yarnpkg.com/electron/-/electron-1.8.4.tgz#cca8d0e6889f238f55b414ad224f03e03b226a38"
+  dependencies:
+    "@types/node" "^8.0.24"
+    electron-download "^3.0.1"
+    extract-zip "^1.0.3"
+
+electron@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-2.0.4.tgz#87b86b8d9c13748032868c1be97e2b7021a51808"
   dependencies:
     "@types/node" "^8.0.24"
     electron-download "^3.0.1"
@@ -1605,6 +1614,12 @@ locate-path@^2.0.0:
   dependencies:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
+
+lockfile@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/lockfile/-/lockfile-1.0.4.tgz#07f819d25ae48f87e538e6578b6964a4981a5609"
+  dependencies:
+    signal-exit "^3.0.2"
 
 lodash.get@^4.0.0:
   version "4.4.2"
@@ -2283,10 +2298,6 @@ robotjs@^0.5.1:
   dependencies:
     nan "^2.2.1"
     prebuild-install "^2.1.1"
-
-rwlock@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/rwlock/-/rwlock-5.0.0.tgz#888d6a77a3351cc1a209204ef2ee1722093836cf"
 
 safe-buffer@^5.0.1, safe-buffer@^5.1.1, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
