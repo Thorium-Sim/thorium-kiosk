@@ -15,7 +15,7 @@ module.exports = mainWindow => {
   });
 
   globalShortcut.register("CommandOrControl+R", function() {
-    // Do nothing.
+    mainWindow.reload();
   });
 
   globalShortcut.register("CommandOrControl+Alt+I", function() {

@@ -1,49 +1,58 @@
 {
-  "name": "thorium-client",
-  "version": "1.0.2",
+  "name": "thorium-kiosk",
+  "version": "2.0.0",
   "description": "A client application for Thorium",
-  "main": "main.js",
+  "main": "src/index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "build": "build -mwl",
-    "ship": "build -mwl -p always",
+    "pack": "electron-builder -mwl",
+    "dist": "electron-builder -mwl -p always",
     "postinstall": "electron-builder install-app-deps"
   },
-  "build": {
-    "appId": "us.fyreworks.thoriumclient",
-    "productName": "Thorium Client",
-    "copyright": "Copyright © 2018 Fyreworks LLC",
-    "mac": {
-      "category": "public.app-category.entertainment",
-      "icon": "icon.icns"
-    },
-    "win": {
-      "icon": "icon.ico"
-    }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thorium-Sim/thorium-kiosk.git"
   },
-  "repository": "https://github.com/thorium-sim/thorium-kiosk",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "electron"
   ],
   "author": "Alex Anderson <alex@fyreworks.us>",
-  "license": "Apache 2.0",
-  "homepage": "https://thoriumsim.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Thorium-Sim/thorium-kiosk/issues"
+  },
+  "homepage": "https://github.com/Thorium-Sim/thorium-kiosk#readme",
   "devDependencies": {
-    "electron": "^1.8.4",
-    "electron-builder": "^20.9.2",
-    "electron-builder-squirrel-windows": "^20.9.0",
-    "electron-packager": "^12.0.1"
+    "electron": "^3.0.10",
+    "electron-builder": "^20.36.2"
+  },
+  "build": {
+    "appId": "us.fyreworks.thorium",
+    "productName": "Thorium",
+    "asar": false,
+    "directories": {
+      "output": "./packages"
+    },
+    "publish": {
+      "provider": "github"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "icon": "./public/icon.icns"
+    },
+    "win": {
+      "icon": "./public/icon.ico"
+    }
   },
   "dependencies": {
     "bonjour": "^3.5.0",
-    "dialogs": "^1.1.20",
-    "electron-json-storage": "^4.1.0",
-    "electron-prompt": "^0.5.0",
-    "electron-settings": "^3.1.4",
-    "electron-updater": "^2.21.8",
+    "electron-settings": "^3.2.0",
+    "electron-updater": "^4.0.4",
     "power-off": "^1.1.2",
     "robotjs": "^0.5.1",
     "sleep-mode": "^1.1.0"
