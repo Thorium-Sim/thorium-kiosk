@@ -1,7 +1,7 @@
 const webFrame = require("electron").webFrame;
 
 let browserCount = require("electron").remote.getCurrentWindow().browserCount;
-const key = "thorium_clientId";
+const key = "thorium_clientPersistentId";
 let clientId = sessionStorage.getItem(key);
 
 webFrame.setVisualZoomLevelLimits(1, 1);
@@ -14,6 +14,7 @@ setClientId(
 function setClient(id) {
   sessionStorage.setItem(key, id);
   clientId = id;
+  localStorage.setItem("thorium_clientId", id);
 }
 
 function setClientId(id) {

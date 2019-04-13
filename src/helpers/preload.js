@@ -4,7 +4,7 @@ const ipAddress = require("./ipaddress");
 
 let browserCount = require("electron").remote.getCurrentWindow().browserCount;
 
-const key = "thorium_clientId";
+const key = "thorium_clientPersistentId";
 let clientId = sessionStorage.getItem(key);
 webFrame.setVisualZoomLevelLimits(1, 1);
 webFrame.setLayoutZoomLevelLimits(0, 0);
@@ -15,6 +15,7 @@ setClientId(
 
 function setClient(id) {
   sessionStorage.setItem(key, id);
+  localStorage.setItem("thorium_clientId", id);
   clientId = id;
 }
 
@@ -44,7 +45,6 @@ function getClientList() {
 window.loadPage = function loadPage(url) {
   let auto = false;
   if (document.getElementById("remember-client").checked) auto = true;
-  console.log("loading page");
   ipcRenderer.send("loadPage", { url, auto });
   return;
 };
