@@ -1,6 +1,6 @@
 {
   "name": "thorium-kiosk",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A client application for Thorium",
   "main": "src/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "homepage": "https://github.com/Thorium-Sim/thorium-kiosk#readme",
   "devDependencies": {
     "electron": "^3.0.10",
-    "electron-builder": "^20.36.2"
+    "electron-builder": "^20.39.0"
   },
   "build": {
     "appId": "us.fyreworks.thorium",
@@ -54,7 +54,7 @@
     "electron-settings": "^3.2.0",
     "electron-updater": "^4.0.4",
     "power-off": "^1.1.2",
-    "robotjs": "^0.5.1",
-    "sleep-mode": "^1.1.0"
+    "sleep-mode": "^1.1.0",
+    "uuid": "^3.3.2"
   }
 }

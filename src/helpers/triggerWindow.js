@@ -4,7 +4,7 @@ const { app } = require("electron");
 
 module.exports = function triggerWindow(mainWindow) {
   mainWindow.setKiosk(true);
-  initHotkeys(mainWindow);
+  initHotkeys();
   initRemote();
 
   mainWindow.on("closed", function() {

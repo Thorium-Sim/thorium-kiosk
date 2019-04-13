@@ -1,64 +1,48 @@
-const { app, globalShortcut, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
+
+// Make the kiosk work better on slightly older computers
+app.commandLine.appendSwitch("ignore-gpu-blacklist", "true");
+
 const { autoUpdater } = require("electron-updater");
 
-const path = require("path");
-const url = require("url");
 const loadPage = require("./loadPage");
-const startBonjour = require("./bonjour");
+const { bonjour } = require("./bonjour");
 const settings = require("electron-settings");
 const { setMenubar } = require("./setMenubar");
-const hotkeys = require("./hotkeys");
-let mainWindow;
-let browser;
+const { checkWindow, addWindow } = require("./multiWindow");
 
 module.exports = () => {
   app.on("ready", function() {
+    checkWindow();
     autoUpdater.checkForUpdatesAndNotify();
-    ipcMain.on("loadPage", function(evt, { url, auto }) {
+    addWindow({ main: true });
+    ipcMain.on("getWindowCount", event => {
+      event.returnValue = BrowserWindow.getAllWindows().filter(b => {
+        return b.isVisible();
+      }).length;
+    });
+    ipcMain.on("loadPage", function(evt, data) {
+      const { url: loadUrl, auto } = data;
       if (auto) {
-        settings.set("autostart", url);
+        settings.set("autostart", loadUrl);
       }
-      loadPage(url, mainWindow).catch(() => {
+      loadPage(loadUrl).catch(() => {
         settings.set("autostart", null);
-        browser = startBonjour(mainWindow);
+        bonjour.start();
       });
     });
-    mainWindow = new BrowserWindow({
-      backgroundColor: "#2e2c29",
-      width: 800,
-      height: 600,
-      kiosk: false,
-      webPreferences: {
-        nodeIntegration: false,
-        preload: path.resolve(__dirname + "/preload.js")
-      }
-    });
-    mainWindow.on("closed", function() {
-      // Dereference the window object, usually you would store windows
-      // in an array if your app supports multi windows, this is the time
-      // when you should delete the corresponding element.
-      browser && browser.stop();
-      mainWindow = null;
-    });
-    mainWindow.loadURL(
-      url.format({
-        pathname: path.join(__dirname, "../index.html"),
-        protocol: "file:",
-        slashes: true
-      })
-    );
     if (settings.get("autostart")) {
       // Check to see if the page will work.
-      const url = settings.get("autostart");
+      const loadUrl = settings.get("autostart");
       // Do a fetch
-      loadPage(url, mainWindow).catch(() => {
+      loadPage(loadUrl).catch(() => {
         settings.set("autostart", null);
-        browser = startBonjour(mainWindow);
+        bonjour.start();
       });
     } else {
-      browser = startBonjour(mainWindow);
+      bonjour.start();
     }
-    setMenubar(mainWindow);
+    setMenubar();
     app.on("window-all-closed", function() {
       // On OS X it is common for applications and their menu bar
       // to stay active until the user quits explicitly with Cmd + Q
@@ -66,5 +50,3 @@ module.exports = () => {
     });
   });
 };
-
-module.mainWindow = mainWindow;
