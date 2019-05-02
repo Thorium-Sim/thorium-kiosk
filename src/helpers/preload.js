@@ -42,10 +42,20 @@ function getClientList() {
   return clientList;
 }
 
+document.addEventListener("DOMContentLoaded", function() {
+  if (localStorage.getItem("thorium_startKiosked") !== "false") {
+    if (document.getElementById("start-kiosked")) {
+      document.getElementById("start-kiosked").checked = true;
+    }
+  }
+});
+
 window.loadPage = function loadPage(url) {
   let auto = false;
   if (document.getElementById("remember-client").checked) auto = true;
-  ipcRenderer.send("loadPage", { url, auto });
+  let kiosk = document.getElementById("start-kiosked").checked;
+  localStorage.setItem("thorium_startKiosked", kiosk);
+  ipcRenderer.send("loadPage", { url, auto, kiosk });
   return;
 };
 window.openBrowser = function openBrowser() {

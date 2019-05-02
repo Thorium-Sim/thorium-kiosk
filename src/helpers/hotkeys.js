@@ -1,5 +1,6 @@
 const { app, globalShortcut, BrowserWindow } = require("electron");
 const { windows } = require("./multiWindow");
+const { clearMenubar, setMenubar } = require("./setMenubar");
 
 module.exports = () => {
   // Create the browser window.
@@ -8,15 +9,15 @@ module.exports = () => {
     mainWindow.webContents.openDevTools();
   });
 
-  globalShortcut.register("CommandOrControl+Q", function() {
-    // Do nothing.
-  });
+  // globalShortcut.register("CommandOrControl+Q", function() {
+  //   // Do nothing.
+  // });
 
-  globalShortcut.register("CommandOrControl+W", function() {
-    // Do nothing.
-  });
+  // globalShortcut.register("CommandOrControl+W", function() {
+  //   // Do nothing.
+  // });
 
-  globalShortcut.register("CommandOrControl+R", function() {
+  globalShortcut.register("CommandOrControl+Alt+R", function() {
     windows.forEach(mainWindow => {
       mainWindow && mainWindow.reload();
     });
@@ -31,9 +32,11 @@ module.exports = () => {
       windows.forEach(mainWindow => {
         mainWindow.setKiosk(false);
       });
+      setMenubar();
     } else {
       windows.forEach(mainWindow => {
         mainWindow.setKiosk(true);
+        clearMenubar();
       });
     }
   });

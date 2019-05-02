@@ -4,7 +4,7 @@ const { clearMenubar, setMenubar } = require("./setMenubar");
 const { windows } = require("./multiWindow");
 const { setLoadedUrl } = require("./loadedUrl");
 
-module.exports = function loadPage(uri) {
+module.exports = function loadPage(uri, kiosk) {
   return new Promise((resolve, reject) => {
     const url = uri
       .replace("https://", "")
@@ -12,17 +12,18 @@ module.exports = function loadPage(uri) {
       .replace("/client", "");
     http
       .get(`http://${url}/client`, res => {
-        if (res.statusCode !== 200) {
-          setMenubar();
-          return reject();
-        }
+        // if (res.statusCode !== 200) {
+        //   setMenubar();
+        //   return reject();
+        // }
         setLoadedUrl(`http://${url}/client`);
         windows.forEach(mainWindow => {
           mainWindow && mainWindow.loadURL(`http://${url}/client`);
-          triggerWindow(mainWindow);
+          triggerWindow(mainWindow, kiosk);
         });
-
-        clearMenubar();
+        if (kiosk) {
+          clearMenubar();
+        }
         return resolve();
       })
       .on("error", e => {

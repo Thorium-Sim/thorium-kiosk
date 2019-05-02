@@ -28,7 +28,7 @@ function addWindow({ main, x, y, loadedUrl }) {
   const config = {
     backgroundColor: "#2e2c29",
     width: 800,
-    height: 600,
+    height: 700,
     x,
     y,
     kiosk: false,

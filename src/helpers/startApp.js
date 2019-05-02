@@ -22,11 +22,11 @@ module.exports = () => {
       }).length;
     });
     ipcMain.on("loadPage", function(evt, data) {
-      const { url: loadUrl, auto } = data;
+      const { url: loadUrl, auto, kiosk } = data;
       if (auto) {
         settings.set("autostart", loadUrl);
       }
-      loadPage(loadUrl).catch(() => {
+      loadPage(loadUrl, kiosk).catch(() => {
         settings.set("autostart", null);
         bonjour.start();
       });
@@ -35,7 +35,7 @@ module.exports = () => {
       // Check to see if the page will work.
       const loadUrl = settings.get("autostart");
       // Do a fetch
-      loadPage(loadUrl).catch(() => {
+      loadPage(loadUrl, true).catch(() => {
         settings.set("autostart", null);
         bonjour.start();
       });

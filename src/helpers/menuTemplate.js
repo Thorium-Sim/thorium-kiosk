@@ -1,6 +1,7 @@
 const { BrowserWindow, app } = require("electron");
 const { windows, addWindow } = require("./multiWindow");
 const { getLoadedUrl } = require("./loadedUrl");
+const { clearMenubar, setMenubar } = require("./setMenubar");
 
 module.exports = function() {
   var template = [
@@ -11,6 +12,18 @@ module.exports = function() {
           label: "About Application",
           selector: "orderFrontStandardAboutPanel:"
         },
+        {
+          label: "Quit",
+          accelerator: "CmdOrCtrl+Alt+Q",
+          click: function() {
+            app.quit();
+          }
+        }
+      ]
+    },
+    {
+      label: "File",
+      submenu: [
         {
           label: "New Window",
           accelerator: "CmdOrCtrl+N",
@@ -35,10 +48,12 @@ module.exports = function() {
             if (windows[0] && windows[0].isKiosk()) {
               windows.forEach(mainWindow => {
                 mainWindow.setKiosk(false);
+                setMenubar();
               });
             } else {
               windows.forEach(mainWindow => {
                 mainWindow.setKiosk(true);
+                clearMenubar();
               });
             }
           }
@@ -49,13 +64,6 @@ module.exports = function() {
           click: function() {
             const focused = BrowserWindow.getFocusedWindow();
             focused && focused.webContents.openDevTools();
-          }
-        },
-        {
-          label: "Quit",
-          accelerator: "CmdOrCtrl+Alt+Q",
-          click: function() {
-            app.quit();
           }
         }
       ]

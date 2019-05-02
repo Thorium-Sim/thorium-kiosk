@@ -1,14 +1,13 @@
 // var robot = require("robotjs");
 // //console.log(process.version);
 // module.exports = function() {
-//   // Speed up the mouse.
-//   robot.setMouseDelay(2);
-
-//   var twoPI = Math.PI * 2.0;
 //   var screenSize = robot.getScreenSize();
 //   var height = screenSize.height;
 //   var width = screenSize.width;
 //   var counter = 0;
+
+//   // Speed up the mouse.
+//   robot.setMouseDelay(2);
 
 //   moveMouse();
 //   function moveMouse() {
