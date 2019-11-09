@@ -1,4 +1,4 @@
-const powerOff = require("power-off");
+const powerOff = require("./shutdown");
 const sleepMode = require("sleep-mode");
 const restart = require("./restart");
 const freakout = require("./freakout");

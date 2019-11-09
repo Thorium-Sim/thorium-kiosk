@@ -1,6 +1,7 @@
 const ipcRenderer = require("electron").ipcRenderer;
 const webFrame = require("electron").webFrame;
 const ipAddress = require("./ipaddress");
+const mac = require("./macaddress");
 
 let browserCount = require("electron").remote.getCurrentWindow().browserCount;
 
@@ -90,7 +91,8 @@ const thorium = {
   sendMessage: function(arg) {
     return ipcRenderer.send("remoteMessage", arg);
   },
-  ipAddress: ipAddress
+  ipAddress: ipAddress,
+  mac: mac
 };
 
 ipcRenderer.on("clearUrl", function() {
